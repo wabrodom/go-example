@@ -6,7 +6,8 @@ on:
       - master
 
 jobs:
-  a_test_job:
+  if_not_contain_skip:
+    if: ${{ !contains(github.event.head_commit.message, '#skip') }}
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
@@ -18,12 +19,15 @@ jobs:
         env:
           COMMITS: ${{ toJson(github.event.commits) }}
         run: echo "$COMMITS"
+
+
+  contain_skip:
+    if: ${{ contains(github.event.head_commit.message, '#skip') }}
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+
       - name: commit messages
         env:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
-        run: echo "$COMMIT_MESSAGES"
-
-      - name: typeof commit messages
-        env:
-          COMMIT_MESSAGES: ${{ toJson(typeof github.event.commits.*.message) }}
         run: echo "$COMMIT_MESSAGES"

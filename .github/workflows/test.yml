@@ -3,7 +3,7 @@ name: Testing stuff
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   a_test_job:
@@ -21,4 +21,9 @@ jobs:
       - name: commit messages
         env:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
+        run: echo "$COMMIT_MESSAGES"
+
+      - name: typeof commit messages
+        env:
+          COMMIT_MESSAGES: ${{ toJson(typeof github.event.commits.*.message) }}
         run: echo "$COMMIT_MESSAGES"

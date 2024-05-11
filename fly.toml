@@ -1,12 +1,17 @@
-# fly.toml app configuration file generated for go-example-whynot on 2024-05-11T10:18:10+07:00
+# fly.toml app configuration file generated for go-example-why on 2024-05-11T10:44:45+07:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'go-example-whynot'
+app = 'go-example-why'
 primary_region = 'sin'
 
 [build]
+  [build.args]
+    GO_VERSION = '1.22'
+
+[env]
+  PORT = '8080'
 
 [http_service]
   internal_port = 8080

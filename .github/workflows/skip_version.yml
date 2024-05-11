@@ -1,4 +1,4 @@
-name: Testing stuff
+name: commit contain #skip or not then test notify on discord
 
 on:
   push:
@@ -32,18 +32,23 @@ jobs:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
         run: echo "$COMMIT_MESSAGES"
 
+  notify_on_dicords:
+    needs: [if_not_contain_skip, contain_skip]
+    runs-on: ubuntu-20.04
+    steps:
       - name: if Success
         uses: rjstone/discord-webhook-notify@v1.0.4
         if: success()
         with:
-            severity: info
-            details: Test Succeeded!
-            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          severity: info
+          description: deploy succeeded!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
             
-      - name: Test Failure
+      - name: if Failure
         uses: rjstone/discord-webhook-notify@v1.0.4
         if: failure()
         with:
-            severity: error
-            details: Test Failed!
-            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          severity: error
+          description: deploy failed!
+          details: not OK
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}

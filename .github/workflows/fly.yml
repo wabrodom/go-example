@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - master    # change to main if needed
+  pull_request:
+    branches: [master]
+    types: [opened, synchronize]
+
 jobs:
   deploy:
     name: Deploy app

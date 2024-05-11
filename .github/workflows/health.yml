@@ -23,3 +23,19 @@ jobs:
           # Basic auth login password pair.
           # Format: `login:password`
           # basic-auth: "login:password" # Optional, default is empty
+
+      - name: ping success
+        if: success()
+        uses: rjstone/discord-webhook-notify@v1.0.4
+        with:
+          severity: info
+          description: ping succeeded!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+
+      - name: ping failed
+        if: failure()
+        uses: rjstone/discord-webhook-notify@v1.0.4
+        with:
+          severity: error
+          description: ping succeeded!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}

@@ -1,9 +1,6 @@
 name: commit contain #skip or not then test notify on discord
 
 on:
-  push:
-    branches:
-      - master
   pull_request:
     branches: [master]
     types: [opened, synchronize]
